@@ -7,7 +7,7 @@
 
 /*=== f2c_end __file ===*/
 
-import { get, patch, post, delete_ } from '$liwe3/utils/fetcher';
+import { get, patch, post, delete_, type LiWEFetcherOptions } from '$liwe3/utils/fetcher';
 
 /**
  * Adds order in the system.
@@ -20,8 +20,8 @@ import { get, patch, post, delete_ } from '$liwe3/utils/fetcher';
  * @return order: Order
  *
  */
-export const order_admin_add = async ( prod_code: string, qnt: number, id_user: string ) => {
-	const res = await post( `/api/order/admin/add`, { prod_code, qnt, id_user }, true );
+export const order_admin_add = async ( prod_code: string, qnt: number, id_user: string, _options?: LiWEFetcherOptions ) => {
+	const res = await post( `/api/order/admin/add`, { prod_code, qnt, id_user }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -42,8 +42,8 @@ export const order_admin_add = async ( prod_code: string, qnt: number, id_user: 
  * @return order: Order
  *
  */
-export const order_admin_update = async ( id: string, name?: string ) => {
-	const res = await patch( `/api/order/admin/update`, { id, name }, true );
+export const order_admin_update = async ( id: string, name?: string, _options?: LiWEFetcherOptions ) => {
+	const res = await patch( `/api/order/admin/update`, { id, name }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -64,8 +64,8 @@ export const order_admin_update = async ( id: string, name?: string ) => {
  * @return order: Order
  *
  */
-export const order_admin_fields = async ( id: string, data: any ) => {
-	const res = await patch( `/api/order/admin/fields`, { id, data }, true );
+export const order_admin_fields = async ( id: string, data: any, _options?: LiWEFetcherOptions ) => {
+	const res = await patch( `/api/order/admin/fields`, { id, data }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -87,8 +87,8 @@ export const order_admin_fields = async ( id: string, data: any ) => {
  * @return orders: Order
  *
  */
-export const order_admin_list = async ( skip: number = 0, rows: number = -1 ) => {
-	const res = await get( `/api/order/admin/list`, { skip, rows }, true );
+export const order_admin_list = async ( skip: number = 0, rows: number = -1, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/order/admin/list`, { skip, rows }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -107,8 +107,8 @@ export const order_admin_list = async ( skip: number = 0, rows: number = -1 ) =>
  * @return id: str
  *
  */
-export const order_admin_del = async ( id: string ) => {
-	const res = await delete_( `/api/order/admin/del`, { id }, true );
+export const order_admin_del = async ( id: string, _options?: LiWEFetcherOptions ) => {
+	const res = await delete_( `/api/order/admin/del`, { id }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -128,8 +128,8 @@ export const order_admin_del = async ( id: string ) => {
  * @return order: Order
  *
  */
-export const order_admin_tag = async ( id: string, tags: string[] ) => {
-	const res = await post( `/api/order/admin/tag`, { id, tags }, true );
+export const order_admin_tag = async ( id: string, tags: string[], _options?: LiWEFetcherOptions ) => {
+	const res = await post( `/api/order/admin/tag`, { id, tags }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -150,8 +150,8 @@ export const order_admin_tag = async ( id: string, tags: string[] ) => {
  * @return order: OrderFull
  *
  */
-export const order_add = async ( prod_code: string, qnt: number ) => {
-	const res = await post( `/api/order/add`, { prod_code, qnt }, true );
+export const order_add = async ( prod_code: string, qnt: number, _options?: LiWEFetcherOptions ) => {
+	const res = await post( `/api/order/add`, { prod_code, qnt }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -173,8 +173,8 @@ export const order_add = async ( prod_code: string, qnt: number ) => {
  * @return order: OrderFull
  *
  */
-export const order_details = async ( id: string ) => {
-	const res = await get( `/api/order/details`, { id }, false );
+export const order_details = async ( id: string, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/order/details`, { id }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -197,8 +197,8 @@ export const order_details = async ( id: string ) => {
  * @return orders: Order
  *
  */
-export const order_list = async ( rows: number = -1, skip: number = 0 ) => {
-	const res = await get( `/api/order/list`, { rows, skip }, false );
+export const order_list = async ( rows: number = -1, skip: number = 0, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/order/list`, { rows, skip }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -217,8 +217,8 @@ export const order_list = async ( rows: number = -1, skip: number = 0 ) => {
  * @return order: OrderFull
  *
  */
-export const order_cart = async (  ) => {
-	const res = await get( `/api/order/cart`, {}, true );
+export const order_cart = async ( _options?: any ) => {
+	const res = await get( `/api/order/cart`, {}, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -240,8 +240,8 @@ export const order_cart = async (  ) => {
  * @return order: OrderFull
  *
  */
-export const order_item_del = async ( id_order: string, id_item: string ) => {
-	const res = await delete_( `/api/order/item/del`, { id_order, id_item }, true );
+export const order_item_del = async ( id_order: string, id_item: string, _options?: LiWEFetcherOptions ) => {
+	const res = await delete_( `/api/order/item/del`, { id_order, id_item }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -253,7 +253,8 @@ export const order_item_del = async ( id_order: string, id_item: string ) => {
 };
 
 /**
- * The `challenge` parameter is a `MD5` hash created composing (`email` + `name` + `remote_secret_key` as set in the `data.json` config file under `security / remote`).
+ * The `challenge` parameter is a challenge hash created composing 
+ * `id_order`, `transaction_id`, `session_id`, `payment_mode` as set in the `data.json` config file under `security / remote`).
  *
  * @param id_order - The order ID [req]
  * @param challenge - The challenge verification code [req]
@@ -264,14 +265,14 @@ export const order_item_del = async ( id_order: string, id_item: string ) => {
  * @return log: OrderPaymentLog
  *
  */
-export const order_transaction_start = async ( id_order: string, challenge: string, payment_mode: string, transaction_id: string, session_id?: string ) => {
+export const order_transaction_start = async ( id_order: string, challenge: string, payment_mode: string, transaction_id: string, session_id?: string, _options?: LiWEFetcherOptions ) => {
 	const res = await post( `/api/order/transaction/start`, { 
 		challenge,
 		id_order,
 		payment_mode,
 		session_id,
 		transaction_id
-	 }, false );
+	 }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -295,7 +296,7 @@ export const order_transaction_start = async ( id_order: string, challenge: stri
  * @return log: OrderPaymentLog
  *
  */
-export const order_transaction_update = async ( challenge: string, payment_mode: string, transaction_id: string, session_id?: string, event_name?: string, data?: any ) => {
+export const order_transaction_update = async ( challenge: string, payment_mode: string, transaction_id: string, session_id?: string, event_name?: string, data?: any, _options?: LiWEFetcherOptions ) => {
 	const res = await post( `/api/order/transaction/update`, { 
 		challenge,
 		data,
@@ -303,7 +304,7 @@ export const order_transaction_update = async ( challenge: string, payment_mode:
 		payment_mode,
 		session_id,
 		transaction_id
-	 }, false );
+	 }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -325,13 +326,13 @@ export const order_transaction_update = async ( challenge: string, payment_mode:
  * @return order: Order
  *
  */
-export const order_transaction_success = async ( challenge: string, transaction_id: string, session_id?: string, payment_mode?: string ) => {
+export const order_transaction_success = async ( challenge: string, transaction_id: string, session_id?: string, payment_mode?: string, _options?: LiWEFetcherOptions ) => {
 	const res = await post( `/api/order/transaction/success`, { 
 		challenge,
 		payment_mode,
 		session_id,
 		transaction_id
-	 }, false );
+	 }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -353,13 +354,13 @@ export const order_transaction_success = async ( challenge: string, transaction_
  * @return order: Order
  *
  */
-export const order_transaction_failed = async ( challenge: string, transaction_id: string, session_id?: string, payment_mode?: string ) => {
+export const order_transaction_failed = async ( challenge: string, transaction_id: string, session_id?: string, payment_mode?: string, _options?: LiWEFetcherOptions ) => {
 	const res = await post( `/api/order/transaction/failed`, { 
 		challenge,
 		payment_mode,
 		session_id,
 		transaction_id
-	 }, false );
+	 }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -376,8 +377,8 @@ export const order_transaction_failed = async ( challenge: string, transaction_i
  * @return order: OrderFull
  *
  */
-export const order_admin_details = async ( id: string ) => {
-	const res = await get( `/api/order/admin/details`, { id }, true );
+export const order_admin_details = async ( id: string, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/order/admin/details`, { id }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -396,8 +397,8 @@ export const order_admin_details = async ( id: string ) => {
  * @return id: str
  *
  */
-export const order_admin_del_real = async ( id: string ) => {
-	const res = await delete_( `/api/order/admin/del/real`, { id }, true );
+export const order_admin_del_real = async ( id: string, _options?: LiWEFetcherOptions ) => {
+	const res = await delete_( `/api/order/admin/del/real`, { id }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -406,4 +407,25 @@ export const order_admin_del_real = async ( id: string ) => {
 	/*=== f2c_end order_admin_del_real ===*/
 
 	return res.id;
+};
+
+/**
+ * Only the current user that owns the order can add notes to the order itself.
+ *
+ * @param id - Order ID [req]
+ * @param notes - Order notes [req]
+ *
+ * @return order: Order
+ *
+ */
+export const order_notes_add = async ( id: string, notes: string, _options?: LiWEFetcherOptions ) => {
+	const res = await post( `/api/order/notes/add`, { id, notes }, _options?.skipError ? _options.skipError : false );
+
+	if (res.error) return res;
+
+	/*=== f2c_start order_notes_add ===*/
+
+	/*=== f2c_end order_notes_add ===*/
+
+	return res.order;
 };
