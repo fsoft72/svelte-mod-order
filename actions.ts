@@ -146,12 +146,13 @@ export const order_admin_tag = async ( id: string, tags: string[], _options?: Li
  *
  * @param prod_code - Product Code [req]
  * @param qnt - Quantity to add [req]
+ * @param overwrite - If set to `true` overwrites the quantity [opt]
  *
  * @return order: OrderFull
  *
  */
-export const order_add = async ( prod_code: string, qnt: number, _options?: LiWEFetcherOptions ) => {
-	const res = await post( `/api/order/add`, { prod_code, qnt }, _options?.skipError ? _options.skipError : false );
+export const order_add = async ( prod_code: string, qnt: number, overwrite?: boolean, _options?: LiWEFetcherOptions ) => {
+	const res = await post( `/api/order/add`, { prod_code, qnt, overwrite }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 

@@ -154,7 +154,9 @@ export interface OrderFull {
 	/** Order payment status */
 	payment_status: OrderPaymentStatus;
 	/** Order Creation Date */
-	created?: Date;
+	created: Date;
+	/** Order notes */
+	notes: string;
 }
 
 /** OrderPaymentLog */
