@@ -79,6 +79,8 @@ export interface Order {
 	user?: UserSmall;
 	/** Order user notes */
 	notes?: string;
+	/** The delivery address */
+	address?: any;
 }
 
 /** OrderItem */
@@ -157,6 +159,8 @@ export interface OrderFull {
 	created: Date;
 	/** Order notes */
 	notes: string;
+	/** Delivery address */
+	address: any;
 }
 
 /** OrderPaymentLog */

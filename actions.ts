@@ -430,3 +430,25 @@ export const order_notes_add = async ( id: string, notes: string, _options?: LiW
 
 	return res.order;
 };
+
+/**
+ * Set inside the `order` structure the delivery address.
+ * Only the order owner can call this (or admin)
+ *
+ * @param id - Order ID [req]
+ * @param address - Delivery address [req]
+ *
+ * @return order: Order
+ *
+ */
+export const order_set_delivery_address = async ( id: string, address: any, _options?: LiWEFetcherOptions ) => {
+	const res = await post( `/api/order/set/delivery/address`, { id, address }, _options?.skipError ? _options.skipError : false );
+
+	if (res.error) return res;
+
+	/*=== f2c_start order_set_delivery_address ===*/
+
+	/*=== f2c_end order_set_delivery_address ===*/
+
+	return res.order;
+};
