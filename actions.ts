@@ -412,15 +412,17 @@ export const order_admin_del_real = async ( id: string, _options?: LiWEFetcherOp
 
 /**
  * Only the current user that owns the order can add notes to the order itself.
+ * The order can be referenced by `id` or `code`
  *
- * @param id - Order ID [req]
  * @param notes - Order notes [req]
+ * @param id - Order ID [opt]
+ * @param code - Order code [opt]
  *
  * @return order: Order
  *
  */
-export const order_notes_add = async ( id: string, notes: string, _options?: LiWEFetcherOptions ) => {
-	const res = await post( `/api/order/notes/add`, { id, notes }, _options?.skipError ? _options.skipError : false );
+export const order_notes_add = async ( notes: string, id?: string, code?: string, _options?: LiWEFetcherOptions ) => {
+	const res = await post( `/api/order/notes/add`, { notes, id, code }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
@@ -449,6 +451,30 @@ export const order_set_delivery_address = async ( id: string, address: any, _opt
 	/*=== f2c_start order_set_delivery_address ===*/
 
 	/*=== f2c_end order_set_delivery_address ===*/
+
+	return res.order;
+};
+
+/**
+ * Return basic data by `id` or `code`
+ * The `challenge` field is mandatory
+ * Challenge is made by:  `id+code+secret`
+ *
+ * @param challenge - The challenge [req]
+ * @param id - The order ID [opt]
+ * @param code - The order code [opt]
+ *
+ * @return order: Order
+ *
+ */
+export const order_get = async ( challenge: string, id?: string, code?: string, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/order/get`, { challenge, id, code }, _options?.skipError ? _options.skipError : false );
+
+	if (res.error) return res;
+
+	/*=== f2c_start order_get ===*/
+
+	/*=== f2c_end order_get ===*/
 
 	return res.order;
 };
