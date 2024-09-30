@@ -478,3 +478,22 @@ export const order_get = async ( challenge: string, id?: string, code?: string, 
 
 	return res.order;
 };
+
+/**
+ * @param id - Order ID [req]
+ * @param status - New order status [req]
+ *
+ * @return order: Order
+ *
+ */
+export const order_change_status = async ( id: string, status: string, _options?: LiWEFetcherOptions ) => {
+	const res = await patch( `/api/order/change/status`, { id, status }, _options?.skipError ? _options.skipError : false );
+
+	if (res.error) return res;
+
+	/*=== f2c_start order_change_status ===*/
+
+	/*=== f2c_end order_change_status ===*/
+
+	return res.order;
+};

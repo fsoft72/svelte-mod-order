@@ -61,7 +61,7 @@
 			label: 'details',
 			icon: Eye,
 			mode: 'mode1',
-			action: (row: DataGridRow) => {
+			onclick: (row: DataGridRow) => {
 				currRow = row;
 				modalDetails = true;
 			}
@@ -70,16 +70,73 @@
 			label: 'print',
 			icon: Printer,
 			mode: 'mode2',
-			action: (row: DataGridRow) => {
+			onclick: (row: DataGridRow) => {
 				goto(`/admin/order/print/${row.id}`);
 			}
 		}
 	];
-	const buttons: DataGridButton[] = [];
+	const buttons: DataGridButton[] = [
+		{
+			label: 'New',
+			type: 'checkbox',
+			checked: false,
+			onclick: (checked: boolean = true) => {
+				showStatuses.new = checked;
+			}
+		},
+		{
+			label: 'In Progress',
+			type: 'checkbox',
+			checked: true,
+			onclick: (checked: boolean = true) => {
+				showStatuses.in_progress = checked;
+			}
+		},
+		{
+			label: 'Ready',
+			type: 'checkbox',
+			checked: true,
+			onclick: (checked: boolean = true) => {
+				showStatuses.ready = checked;
+			}
+		},
+		{
+			label: 'To deliver',
+			type: 'checkbox',
+			checked: false,
+			onclick: (checked: boolean = true) => {
+				showStatuses.to_deliver = checked;
+			}
+		},
+		{
+			label: 'Completed',
+			type: 'checkbox',
+			checked: false,
+			onclick: (checked: boolean = true) => {
+				showStatuses.completed = checked;
+			}
+		}
+	];
 
 	let data: any[] = $state([]);
 	let currRow: DataGridRow | null = $state(null);
 	let modalDetails: boolean = $state(false);
+
+	let showStatuses: Record<string, boolean> = $state({
+		new: false,
+		in_progress: true,
+		ready: true,
+		to_deliver: false,
+		completed: false
+	});
+
+	let rows = $derived.by(() => {
+		// filter rows by status and remove the ones that are new
+		// if showStatusNew is false
+		return data.filter((row) => {
+			return showStatuses[row.status];
+		});
+	});
 
 	onMount(async () => {
 		const res = await order_admin_list();
@@ -92,7 +149,7 @@
 	});
 </script>
 
-<DataGrid title="Orders" {fields} {data} {actions} {buttons} />
+<DataGrid title="Orders" {fields} data={rows} {actions} {buttons} />
 
 {#if modalDetails && currRow}
 	<Modal
@@ -102,7 +159,9 @@
 	>
 		<OrderDetails id={currRow.id} />
 		<div class="order-buttons">
-			<Button>Prepare</Button>
+			{#if currRow.status === 'ready'}
+				<Button>Prepare</Button>
+			{/if}
 		</div>
 	</Modal>
 {/if}
