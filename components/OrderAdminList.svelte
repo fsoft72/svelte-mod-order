@@ -138,9 +138,9 @@
 		});
 	});
 
-	const orderPrepare = async () => {
+	const orderStatus = async (status: string) => {
 		if (!currRow) return;
-		await order_change_status(currRow.id, 'in_progress');
+		await order_change_status(currRow.id, status);
 		modalDetails = false;
 
 		// update the data array
@@ -148,7 +148,7 @@
 			if (row.id === currRow!.id) {
 				return {
 					...row,
-					status: 'in_progress'
+					status
 				};
 			}
 
@@ -162,8 +162,6 @@
 		if (res.error) return;
 
 		data = res;
-
-		runeDebug(data);
 	});
 </script>
 
@@ -178,7 +176,13 @@
 		<OrderDetails id={currRow.id} />
 		<div class="order-buttons">
 			{#if currRow.status === 'ready'}
-				<Button onclick={orderPrepare}>Prepare</Button>
+				<Button onclick={() => orderStatus('in_progress')}>Prepare</Button>
+			{/if}
+			{#if currRow.status === 'in_progress'}
+				<Button onclick={() => orderStatus('to_deliver')}>To Deliver</Button>
+			{/if}
+			{#if currRow.status === 'to_deliver'}
+				<Button onclick={() => orderStatus('completed')}>Complete</Button>
 			{/if}
 		</div>
 	</Modal>
