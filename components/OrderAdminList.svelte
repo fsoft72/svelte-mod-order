@@ -7,12 +7,14 @@
 		type DataGridAction,
 		type DataGridButton
 	} from '$liwe3/components/DataGrid.svelte';
-	import { Eye } from 'svelte-hero-icons';
+	import { Eye, Printer } from 'svelte-hero-icons';
 	import { order_admin_list } from '../actions';
 	import { runeDebug } from '$liwe3/utils/runes.svelte';
 	import { format_amount } from '$liwe3/utils/utils';
 	import Modal from '$liwe3/components/Modal.svelte';
 	import OrderDetails from './OrderDetails.svelte';
+	import Button from '$liwe3/components/Button.svelte';
+	import { goto } from '$app/navigation';
 
 	const fields: DataGridField[] = [
 		{
@@ -63,6 +65,14 @@
 				currRow = row;
 				modalDetails = true;
 			}
+		},
+		{
+			label: 'print',
+			icon: Printer,
+			mode: 'mode2',
+			action: (row: DataGridRow) => {
+				goto(`/admin/order/print/${row.id}`);
+			}
 		}
 	];
 	const buttons: DataGridButton[] = [];
@@ -82,7 +92,7 @@
 	});
 </script>
 
-<DataGrid {fields} {data} {actions} {buttons} />
+<DataGrid title="Orders" {fields} {data} {actions} {buttons} />
 
 {#if modalDetails && currRow}
 	<Modal
@@ -91,5 +101,18 @@
 		oncancel={() => (modalDetails = false)}
 	>
 		<OrderDetails id={currRow.id} />
+		<div class="order-buttons">
+			<Button>Prepare</Button>
+		</div>
 	</Modal>
 {/if}
+
+<style>
+	.order-buttons {
+		display: flex;
+		justify-content: space-between;
+
+		border-top: 1px solid black;
+		padding: 10px 0;
+	}
+</style>

@@ -55,10 +55,10 @@
 						<tbody>
 							{#each order.items as item}
 								<tr>
-									<td>{item.prod_code}</td>
-									<td>{item.name}</td>
-									<td class="cent">{item.quant}</td>
-									<td class="num">{format_amount(item.total_vat)} ek</td>
+									<td class="sub">{item.prod_code}</td>
+									<td class="sub">{item.name}</td>
+									<td class="sub cent">{item.quant}</td>
+									<td class="sub num">{format_amount(item.total_vat)} ek</td>
 								</tr>
 							{/each}
 						</tbody>
@@ -73,7 +73,7 @@
 	table {
 		width: 100%;
 		border-collapse: separate;
-		border-spacing: 10px;
+		border-spacing: 15px;
 	}
 
 	td {
@@ -86,6 +86,11 @@
 		font-weight: bold;
 		border: 0 !important;
 		vertical-align: top;
+	}
+
+	.sub {
+		border: 0;
+		border-bottom: 1px solid #ddd;
 	}
 
 	.num {
