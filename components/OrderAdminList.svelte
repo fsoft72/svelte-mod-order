@@ -8,7 +8,7 @@
 		type DataGridButton
 	} from '$liwe3/components/DataGrid.svelte';
 	import { Eye, Printer } from 'svelte-hero-icons';
-	import { order_admin_list } from '../actions';
+	import { order_admin_list, order_change_status } from '../actions';
 	import { runeDebug } from '$liwe3/utils/runes.svelte';
 	import { format_amount } from '$liwe3/utils/utils';
 	import Modal from '$liwe3/components/Modal.svelte';
@@ -138,6 +138,24 @@
 		});
 	});
 
+	const orderPrepare = async () => {
+		if (!currRow) return;
+		await order_change_status(currRow.id, 'in_progress');
+		modalDetails = false;
+
+		// update the data array
+		data = data.map((row) => {
+			if (row.id === currRow!.id) {
+				return {
+					...row,
+					status: 'in_progress'
+				};
+			}
+
+			return row;
+		});
+	};
+
 	onMount(async () => {
 		const res = await order_admin_list();
 
@@ -160,7 +178,7 @@
 		<OrderDetails id={currRow.id} />
 		<div class="order-buttons">
 			{#if currRow.status === 'ready'}
-				<Button>Prepare</Button>
+				<Button onclick={orderPrepare}>Prepare</Button>
 			{/if}
 		</div>
 	</Modal>
