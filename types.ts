@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /*=== f2c_start __file ===*/
+import type { User, UserSmall } from "$modules/user/types";
 
 /*=== f2c_end __file ===*/
 
