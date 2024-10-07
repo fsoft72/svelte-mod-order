@@ -39,7 +39,7 @@
 			</tr>
 			<tr>
 				<td class="tit">Address</td>
-				<td colspan="5"><pre>{order.address.addr}</pre></td>
+				<td colspan="5"><pre>{order.address?.addr}</pre></td>
 			</tr>
 			<tr>
 				<td class="tit">Notes</td>
