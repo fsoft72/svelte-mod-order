@@ -3,7 +3,6 @@
 
 /*=== f2c_start __file ===*/
 import type { User, UserSmall } from "$modules/user/types";
-
 /*=== f2c_end __file ===*/
 
 /** OrderStatus - Status of an order */
@@ -16,6 +15,10 @@ export enum OrderStatus {
 	in_progress = "in_progress",
 	/** The order is brand new */
 	new = "new",
+	/** The order has been paid */
+	paid = "paid",
+	/** The order is pending */
+	pending = "pending",
 	/** The order is ready to be processed */
 	ready = "ready",
 	/** The order is ready to be delivered */

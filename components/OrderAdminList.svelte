@@ -85,6 +85,14 @@
 			}
 		},
 		{
+			label: 'Paid',
+			type: 'checkbox',
+			checked: false,
+			onclick: (checked: boolean = true) => {
+				showStatuses.paid = checked;
+			}
+		},
+		{
 			label: 'In Progress',
 			type: 'checkbox',
 			checked: true,
@@ -124,6 +132,7 @@
 
 	let showStatuses: Record<string, boolean> = $state({
 		new: false,
+		paid: true,
 		in_progress: true,
 		ready: true,
 		to_deliver: false,
@@ -177,12 +186,16 @@
 		<div class="order-buttons">
 			{#if currRow.status === 'ready'}
 				<Button onclick={() => orderStatus('in_progress')}>Prepare</Button>
+				<Button mode="mode2" onclick={() => orderStatus('to_deliver')}>To Deliver</Button>
+				<Button mode="mode4" onclick={() => orderStatus('completed')}>Completed</Button>
 			{/if}
 			{#if currRow.status === 'in_progress'}
-				<Button onclick={() => orderStatus('to_deliver')}>To Deliver</Button>
+				<Button onclick={() => orderStatus('ready')}>Ready</Button>
+				<Button mode="mode2" onclick={() => orderStatus('to_deliver')}>To Deliver</Button>
 			{/if}
 			{#if currRow.status === 'to_deliver'}
-				<Button onclick={() => orderStatus('completed')}>Complete</Button>
+				<Button onclick={() => orderStatus('in_progress')}>Prepare</Button>
+				<Button mode="mode4" onclick={() => orderStatus('completed')}>Completed</Button>
 			{/if}
 		</div>
 	</Modal>
@@ -191,7 +204,8 @@
 <style>
 	.order-buttons {
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-start;
+		gap: 2rem;
 
 		border-top: 1px solid black;
 		padding: 10px 0;
