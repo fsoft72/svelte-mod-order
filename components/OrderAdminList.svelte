@@ -87,7 +87,7 @@
 		{
 			label: 'Paid',
 			type: 'checkbox',
-			checked: false,
+			checked: true,
 			onclick: (checked: boolean = true) => {
 				showStatuses.paid = checked;
 			}
@@ -184,6 +184,9 @@
 	>
 		<OrderDetails id={currRow.id} />
 		<div class="order-buttons">
+			{#if currRow.status === 'paid'}
+				<Button onclick={() => orderStatus('in_progress')}>Prepare</Button>
+			{/if}
 			{#if currRow.status === 'ready'}
 				<Button onclick={() => orderStatus('in_progress')}>Prepare</Button>
 				<Button mode="mode2" onclick={() => orderStatus('to_deliver')}>To Deliver</Button>
