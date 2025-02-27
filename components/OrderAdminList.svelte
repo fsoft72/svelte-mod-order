@@ -15,13 +15,15 @@
 	import OrderDetails from './OrderDetails.svelte';
 	import Button from '$liwe3/components/Button.svelte';
 	import { goto } from '$app/navigation';
+	import { OrderStatus } from '../types';
 
 	const fields: DataGridField[] = [
 		{
 			name: 'code',
 			label: 'Code',
 			type: 'text',
-			sortable: true
+			sortable: true,
+			filterable: true
 		},
 		{
 			name: 'user',
@@ -36,7 +38,39 @@
 			label: 'Status',
 			type: 'text',
 			sortable: true,
-			filterable: true
+			filterable: true,
+			options: {
+				filterSelect: [
+					{
+						value: OrderStatus.ready,
+						label: 'Ready'
+					},
+					{
+						value: OrderStatus.in_progress,
+						label: 'In Progress'
+					},
+					{
+						value: OrderStatus.to_deliver,
+						label: 'To Deliver'
+					},
+					{
+						value: OrderStatus.completed,
+						label: 'Completed'
+					},
+					{
+						value: OrderStatus.paid,
+						label: 'Paid'
+					},
+					{
+						value: OrderStatus.new,
+						label: 'New'
+					},
+					{
+						value: OrderStatus.cancelled,
+						label: 'Cancelled'
+					}
+				]
+			}
 		},
 		{
 			name: 'num_items',

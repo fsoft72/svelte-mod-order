@@ -165,17 +165,18 @@ export const order_add = async ( prod_code: string, qnt: number, overwrite?: boo
 
 /**
  * Returns all order details only if the order is `visible`.
- * The order can be identified by  `id`, `code` or `code_forn`.
+ * The order can be identified by  `id` or `code`.
  * You can pass more than a field, but one is enough.
  * This function returns the full `Order` structure
  *
- * @param id - Order unique ID [req]
+ * @param id - Order unique ID [opt]
+ * @param code - Order unique code [opt]
  *
  * @return order: OrderFull
  *
  */
-export const order_details = async ( id: string, _options?: LiWEFetcherOptions ) => {
-	const res = await get( `/api/order/details`, { id }, _options?.skipError ? _options.skipError : false );
+export const order_details = async ( id?: string, code?: string, _options?: LiWEFetcherOptions ) => {
+	const res = await get( `/api/order/details`, { id, code }, _options?.skipError ? _options.skipError : false );
 
 	if (res.error) return res;
 
