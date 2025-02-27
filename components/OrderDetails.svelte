@@ -38,6 +38,10 @@
 				<td>{order.payment_status}</td>
 			</tr>
 			<tr>
+				<td class="tit">User</td>
+				<td colspan="3">{order.user.name} {order.user.lastname} {order.user.username}</td>
+			</tr>
+			<tr>
 				<td class="tit">Address</td>
 				<td colspan="5"><pre>{order.address?.addr}</pre></td>
 			</tr>
