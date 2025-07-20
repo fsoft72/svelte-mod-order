@@ -10,73 +10,6 @@
 import { get, patch, post, delete_, type LiWEFetcherOptions } from '$liwe3/utils/fetcher';
 
 /**
- * Adds order in the system.
- * This function returns the full `Order` structure
- *
- * @param prod_code - Product Code [req]
- * @param qnt - Quantity to add [req]
- * @param id_user - The ID user to add the order to [req]
- *
- * @return order: Order
- *
- */
-export const order_admin_add = async ( prod_code: string, qnt: number, id_user: string, _options?: LiWEFetcherOptions ) => {
-	const res = await post( `/api/order/admin/add`, { prod_code, qnt, id_user }, _options?.skipError ? _options.skipError : false );
-
-	if (res.error) return res;
-
-	/*=== f2c_start order_admin_add ===*/
-
-	/*=== f2c_end order_admin_add ===*/
-
-	return res.order;
-};
-
-/**
- * Updates the order specified by `id`.
- * This function returns the full `Order` structure
- *
- * @param id - Order ID [req]
- * @param name - Order name [opt]
- *
- * @return order: Order
- *
- */
-export const order_admin_update = async ( id: string, name?: string, _options?: LiWEFetcherOptions ) => {
-	const res = await patch( `/api/order/admin/update`, { id, name }, _options?.skipError ? _options.skipError : false );
-
-	if (res.error) return res;
-
-	/*=== f2c_start order_admin_update ===*/
-
-	/*=== f2c_end order_admin_update ===*/
-
-	return res.order;
-};
-
-/**
- * The call modifies one or more fields.
- * This function returns the full `Order` structure
- *
- * @param id - The order ID [req]
- * @param data - The field / value to patch [req]
- *
- * @return order: Order
- *
- */
-export const order_admin_fields = async ( id: string, data: any, _options?: LiWEFetcherOptions ) => {
-	const res = await patch( `/api/order/admin/fields`, { id, data }, _options?.skipError ? _options.skipError : false );
-
-	if (res.error) return res;
-
-	/*=== f2c_start order_admin_fields ===*/
-
-	/*=== f2c_end order_admin_fields ===*/
-
-	return res.order;
-};
-
-/**
  * Returns all orders.
  * This function returns a list of full `Order` structure.
  * This function supports pagination.
@@ -96,7 +29,7 @@ export const order_admin_list = async ( skip: number = 0, rows: number = -1, _op
 
 	/*=== f2c_end order_admin_list ===*/
 
-	return res.orders;
+	return res.data;
 };
 
 /**
@@ -116,28 +49,7 @@ export const order_admin_del = async ( id: string, _options?: LiWEFetcherOptions
 
 	/*=== f2c_end order_admin_del ===*/
 
-	return res.id;
-};
-
-/**
- * This endpoint allows you to add tags to an order.
- *
- * @param id - The order ID [req]
- * @param tags - A list of tags to be added to the user [req]
- *
- * @return order: Order
- *
- */
-export const order_admin_tag = async ( id: string, tags: string[], _options?: LiWEFetcherOptions ) => {
-	const res = await post( `/api/order/admin/tag`, { id, tags }, _options?.skipError ? _options.skipError : false );
-
-	if (res.error) return res;
-
-	/*=== f2c_start order_admin_tag ===*/
-
-	/*=== f2c_end order_admin_tag ===*/
-
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -160,7 +72,7 @@ export const order_add = async ( prod_code: string, qnt: number, overwrite?: boo
 
 	/*=== f2c_end order_add ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -184,7 +96,7 @@ export const order_details = async ( id?: string, code?: string, _options?: LiWE
 
 	/*=== f2c_end order_details ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -208,7 +120,7 @@ export const order_list = async ( rows: number = -1, skip: number = 0, _options?
 
 	/*=== f2c_end order_list ===*/
 
-	return res.orders;
+	return res.data;
 };
 
 /**
@@ -228,7 +140,7 @@ export const order_cart = async ( _options?: any ) => {
 
 	/*=== f2c_end order_cart ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -251,7 +163,7 @@ export const order_item_del = async ( id_order: string, id_item: string, _option
 
 	/*=== f2c_end order_item_del ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -282,7 +194,7 @@ export const order_transaction_start = async ( id_order: string, challenge: stri
 
 	/*=== f2c_end order_transaction_start ===*/
 
-	return res.log;
+	return res.data;
 };
 
 /**
@@ -314,7 +226,7 @@ export const order_transaction_update = async ( challenge: string, payment_mode:
 
 	/*=== f2c_end order_transaction_update ===*/
 
-	return res.log;
+	return res.data;
 };
 
 /**
@@ -342,7 +254,7 @@ export const order_transaction_success = async ( challenge: string, transaction_
 
 	/*=== f2c_end order_transaction_success ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -370,7 +282,7 @@ export const order_transaction_failed = async ( challenge: string, transaction_i
 
 	/*=== f2c_end order_transaction_failed ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -388,7 +300,7 @@ export const order_admin_details = async ( id: string, _options?: LiWEFetcherOpt
 
 	/*=== f2c_end order_admin_details ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -408,7 +320,7 @@ export const order_admin_del_real = async ( id: string, _options?: LiWEFetcherOp
 
 	/*=== f2c_end order_admin_del_real ===*/
 
-	return res.id;
+	return res.data;
 };
 
 /**
@@ -431,7 +343,7 @@ export const order_notes_add = async ( notes: string, id?: string, code?: string
 
 	/*=== f2c_end order_notes_add ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -453,7 +365,7 @@ export const order_set_delivery_address = async ( id: string, address: any, _opt
 
 	/*=== f2c_end order_set_delivery_address ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -477,7 +389,7 @@ export const order_get = async ( challenge: string, id?: string, code?: string, 
 
 	/*=== f2c_end order_get ===*/
 
-	return res.order;
+	return res.data;
 };
 
 /**
@@ -496,5 +408,5 @@ export const order_change_status = async ( id: string, status: string, _options?
 
 	/*=== f2c_end order_change_status ===*/
 
-	return res.order;
+	return res.data;
 };
